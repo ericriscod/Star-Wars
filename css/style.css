@@ -1,0 +1,59 @@
+
+:root{
+  --banana: #FFE81F;
+  --top: 1rem
+}
+
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  text-decoration: none;
+  list-style: none;
+  color: white;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+body {
+  background-image: url('../assets/imagens/backgrund.jpg');
+}
+
+header {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+header h1{
+  margin-top: var(--top);
+  font-size: 14px;
+}
+
+.logo-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  margin-top: 5rem;
+}
+
+.logo-star-wars {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  border: 8px solid var(--banana);
+  border-radius: 50px;
+  height: 200px;
+  width: 400px;
+}
+#img-star-wars {
+  margin: -10px 4px;
+  position: absolute;
+  width: 94%;
+  height: 180%;
+}
