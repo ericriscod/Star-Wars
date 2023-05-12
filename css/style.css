@@ -1,7 +1,10 @@
-
-:root{
+:root {
   --banana: #FFE81F;
-  --top: 1rem
+  --aqua: rgb(0,255,255);
+  --margin1: 1rem;
+  --margin2: 2rem;
+  --margin3: 3rem;
+  --margin5: 5rem;
 }
 
 
@@ -16,7 +19,12 @@
 }
 
 body {
+  position: relative;
   background-image: url('../assets/imagens/backgrund.jpg');
+}
+
+.container {
+  margin: 0 10%;
 }
 
 header {
@@ -26,34 +34,103 @@ header {
   align-items: center;
 }
 
-header h1{
-  margin-top: var(--top);
-  font-size: 14px;
-}
-
-.logo-container {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-
-  margin-top: 5rem;
+a {
+  color: white;
 }
 
 .logo-star-wars {
+  pointer-events: none;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   position: relative;
+  margin: var(--margin3) var(--margin1) 0 var(--margin1);
   border: 8px solid var(--banana);
   border-radius: 50px;
-  height: 200px;
-  width: 400px;
+  background-color: black;
+  min-width: 300px;
+  max-height: 200px;
+  max-width: 400px;
 }
+
 #img-star-wars {
-  margin: -10px 4px;
+  pointer-events: none;
+  display: flex;
+  width: 70%;
+  height: 140%;
+}
+
+header h1 {
+  margin-top: var(--margin1);
+  font-size: 14px;
+}
+
+main {
+  position: relative;
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+
+.img-robo {
   position: absolute;
-  width: 94%;
-  height: 180%;
+  bottom: 12rem;
+  top: -1rem;
+  right: -5rem;
+  height: 25rem;
+}
+
+.card-box {
+  position: absolute;
+  top: 10rem;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  border-radius: 10px;
+  min-height: 320px;
+  min-width: 100px;
+  height: 350;
+  width: 100%;
+  margin-bottom: var(--margin3);
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border: 10px solid var(--banana);
+  min-width: 200px;
+  width: 400px;
+  min-height: 5rem;
+  height: 10rem;
+  background-color: black;
+}
+
+.card a {
+  display: flex;
+  font-weight: 600;
+  height: 100%;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+  color: var(--aqua);
+  font-size: 24px;
+}
+
+a:hover{
+  background-color: rgb(29, 29, 29);
+  transition-duration: 0.5s;
+  font-size: 26px;
+}
+
+button{
+  height: 100%;
+  width: 100%;
+  border: 0;
+  background-color: transparent;
 }
