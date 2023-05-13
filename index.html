@@ -12,50 +12,55 @@
 <body>
   <div class="container">
     <header class="container">
-
-      <div class="logo-star-wars">
+      <div class="star-wars">
         <img id="img-star-wars" src="assets/imagens/Star-Wars-Logo-1977.png" alt="Logo Star Wars" />
       </div>
 
       <div>
         <h1>Developed with Star Wars API</h1>
       </div>
-
+      
+      <audio id="sabre" hidden>
+        <source src="sabre.ogg" type="audio/ogg">
+        <source src="./assets/sounds/sabre.mp3" type="audio/mp3">
+      </audio>
+     
     </header>
 
     <main>
+  
       <div>
         <img class="img-robo" src="assets/imagens/bb8.png" alt="bb8" />
       </div>
 
       <div class="card-box">
         <div class="card">
-          <a href="./films.html">Films</a>
+          <a class='link' href="./films.html">Films</a>
         </div>
 
         <div class="card">
-          <a href="./films.html">People</a>
+          <a class="link" href="./films.html">People</a>
         </div>
 
         <div class="card">
-          <a href="./films.html">Planets</a>
+          <a class="link" href="./films.html">Planets</a>
         </div>
 
         <div class="card">
-          <a href="./films.html">Species</a>
+          <a class="link" href="./films.html">Species</a>
         </div>
 
         <div class="card">
-          <a href="./films.html">Starships</a>
+          <a class="link" href="./films.html">Starships</a>
         </div>
 
         <div class="card">
-            <a href="./films.html">Vehicles</a>
+          <a class="link" href="./films.html">Vehicles</a>
         </div>
-
       </div>
     </main>
   </div>
+  <script src="./js/script.js"></script>
 </body>
 
 </html>
