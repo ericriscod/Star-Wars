@@ -20,6 +20,7 @@
 body {
   position: relative;
   background-image: url('../assets/imagens/backgrund.jpg');
+  overflow-x: hidden;
 }
 
 .container {
@@ -31,6 +32,26 @@ header {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+}
+
+header h1 {
+  pointer-events: none;
+  user-select: none;
+  width: 200px;
+  margin-top: var(--margin1);
+  font-size: 14px;
+  animation-name: title;
+  animation-duration: 3s;
+}
+
+@keyframes title {
+  from {
+    margin-left: 100rem;
+  }
+
+  to {
+    margin-left: 0;
+  }
 }
 
 .border-star-wars {
@@ -46,19 +67,26 @@ header {
   border-radius: 50px;
   background-color: black;
   min-width: 300px;
-  max-height: 200px;
-  max-width: 400px;
+  max-height: 150px;
+  max-width: 350px;
 }
 
 #img-star-wars {
   display: flex;
   width: 70%;
   height: 140%;
+  animation-name: img-star-wars;
+  animation-duration: 3s;
 }
 
-header h1 {
-  margin-top: var(--margin1);
-  font-size: 14px;
+@keyframes img-star-wars {
+  from {
+    width: 100px;
+  }
+
+  to {
+    width: 70%;
+  }
 }
 
 main {
@@ -71,31 +99,36 @@ main {
   height: 100%;
 }
 
-.music{
-  position: absolute; 
-  top: 5rem;
-}
-
-#play-music{
-  padding: 5px;
-  font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  background-color: rgb(255, 255, 255, 0.2);
-  border: 2px solid white;
-  border-radius: 5px;
-
-}
-
 .img-robo {
   position: absolute;
+  pointer-events: none;
+  user-select: none;
   bottom: 12rem;
   top: -1rem;
   right: -5rem;
   height: 25rem;
+  animation-duration: 5s;
+  animation-iteration-count: infinite;
+  animation-name: robo;
+}
+
+@keyframes robo {
+  0% {
+    top: 1rem;
+  }
+
+  50% {
+    top: -1rem;
+  }
+
+  100% {
+    top: 1rem;
+  }
 }
 
 .card-box {
   position: absolute;
-  top: 10rem;
+  top: 8rem;
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
