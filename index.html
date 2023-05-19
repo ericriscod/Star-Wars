@@ -12,51 +12,57 @@
 <body>
   <div class="container">
     <header class="container">
-      <div class="star-wars">
+      <div class="border-star-wars">
         <img id="img-star-wars" src="assets/imagens/Star-Wars-Logo-1977.png" alt="Logo Star Wars" />
       </div>
 
       <div>
         <h1>Developed with Star Wars API</h1>
       </div>
-      
+
       <audio id="sabre" hidden>
         <source src="sabre.ogg" type="audio/ogg">
         <source src="./assets/sounds/sabre.mp3" type="audio/mp3">
       </audio>
-     
+
     </header>
 
     <main>
-  
+      <div class="music">
+        <button id="play-music">Play music</button>
+        <audio id="music" src="./assets/sounds/The-Imperial-Marchmp3.mp3" autoplay controls
+          aria-controls="Música Star Wars" loop hidden title="Music Star Wars"></audio>
+      </div>
+
       <div>
         <img class="img-robo" src="assets/imagens/bb8.png" alt="bb8" />
       </div>
 
       <div class="card-box">
-        <div class="card">
-          <a class='link' href="./films.html">Films</a>
-        </div>
 
-        <div class="card">
-          <a class="link" href="./films.html">People</a>
-        </div>
+        <button class="card"><a class='link' href="./films.html">Films</a></button>
 
-        <div class="card">
-          <a class="link" href="./films.html">Planets</a>
-        </div>
 
-        <div class="card">
-          <a class="link" href="./films.html">Species</a>
-        </div>
 
-        <div class="card">
-          <a class="link" href="./films.html">Starships</a>
-        </div>
 
-        <div class="card">
-          <a class="link" href="./films.html">Vehicles</a>
-        </div>
+        <button class="card"><a class="link" href="./films.html">People</a></button>
+
+
+
+
+        <button class="card"><a class="link" href="./films.html">Planets</a></button>
+
+
+
+        <button class="card"><a class="link" href="./films.html">Species</a></button>
+
+
+
+
+        <button class="card"><a class="link" href="./films.html">Starships</a></button>
+
+
+        <button class="card"> <a class="link" href="./films.html">Vehicles</a></button>
       </div>
     </main>
   </div>

@@ -33,8 +33,9 @@ header {
   align-items: center;
 }
 
-.star-wars {
+.border-star-wars {
   pointer-events: none;
+  user-select: none;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -50,7 +51,6 @@ header {
 }
 
 #img-star-wars {
-  pointer-events: none;
   display: flex;
   width: 70%;
   height: 140%;
@@ -69,6 +69,20 @@ main {
   justify-content: center;
   align-items: center;
   height: 100%;
+}
+
+.music{
+  position: absolute; 
+  top: 5rem;
+}
+
+#play-music{
+  padding: 5px;
+  font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: rgb(255, 255, 255, 0.2);
+  border: 2px solid white;
+  border-radius: 5px;
+
 }
 
 .img-robo {
