@@ -24,7 +24,7 @@ body {
     background-image: url('../assets/imagens/backgrund.jpg');
 }
 
-#nave {
+.nave {
     position: absolute;
     width: 250px;
     right: 15%;
@@ -33,6 +33,7 @@ body {
     animation-duration: 5s, 5s;
     animation-delay: 0s, 6s;
     animation-iteration-count: 1, infinite;
+    animation-delay: 1s;
     z-index: 1;
 }
 
@@ -68,6 +69,7 @@ body {
     z-index: 999;
     margin: 0 10%;
     max-width: 30rem;
+    background-color: black;
 
 }
 
