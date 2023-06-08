@@ -64,7 +64,7 @@ header h1 {
   position: relative;
   margin: var(--margin3) var(--margin1) 0 var(--margin1);
   border: 6px solid var(--banana);
-  border-radius: 30px;
+  border-radius: 20px;
   background-color: black;
   min-width: 300px;
   max-height: 150px;
@@ -79,15 +79,6 @@ header h1 {
   animation-duration: 3s;
 }
 
-@keyframes img-star-wars {
-  from {
-    width: 150px;
-  }
-
-  to {
-    width: 70%;
-  }
-}
 
 main {
   position: relative;
@@ -109,20 +100,21 @@ main {
   height: 25rem;
   animation-duration: 5s;
   animation-iteration-count: infinite;
+  animation-delay: 2s;
   animation-name: robo;
 }
 
 @keyframes robo {
   0% {
-    top: 1rem;
-  }
-
-  50% {
     top: -1rem;
   }
 
-  100% {
+  50% {
     top: 1rem;
+  }
+
+  100% {
+    top: -1rem;
   }
 }
 
