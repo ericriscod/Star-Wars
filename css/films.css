@@ -90,6 +90,11 @@ header div nav>a {
     color: var(--banana);
 }
 
+nav a:hover {
+    transition: 2s;
+    color: rgb(252, 252, 252);
+}
+
 header h1 {
     margin-left: 30%;
     margin-top: var(--margin3);
@@ -130,7 +135,7 @@ option {
     text-align: center;
 }
 
-dt{
+dt {
     margin-top: var(--margin2);
     width: 150px;
     margin-left: 5px;

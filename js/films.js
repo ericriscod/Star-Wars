@@ -1,129 +1,80 @@
-function getOptions() {
-    const select = document.querySelector('[options-title]')
+const select = document.querySelector('[options-title]')
+const section_dl = document.querySelector('.section_dl')
+const dl = document.createElement('dl')
 
-    axios.get('https://swapi.dev/api/films')
-        .then(response => {
-            const data = response.data
+async function getOptions() {
+    try {
+        const response = await axios.get('https://swapi.dev/api/films')
+        const data = response.data
 
-            for (i in data.results) {
-                const option = document.createElement('option')
-                const title = data.results[i].title
-
-                option.innerText = title
-                option.value = title
-
-                select.appendChild(option)
-            }
-        })
+        for (let film of data.results) {
+            const option = document.createElement('option')
+            option.innerText = film.title
+            option.value = film.title
+            select.appendChild(option)
+        }
+    } catch (error) {
+        console.error(`Erro ao obter opções: ${error}`)
+    }
 }
 
+async function getDescription() {
+    const response = await axios.get('https://swapi.dev/api/films')
 
-function description() {
-    const section_dl = document.querySelector('.section_dl')
-    const option = document.querySelector('[options-title]')
-    const dl = document.createElement('dl')
+    select.addEventListener('change', () => {
+        dl.textContent = ""
+        const title = select.value
+        const films = response.data
+        console.log(films)
 
-    option.addEventListener('change', () => {
+        for (let film of films.results) {
+            if (film.title === title) {
+                createAndAppendElement('dt', 'Title: ')
+                createAndAppendElement('dd', film.title)
+                createAndAppendElement('dt', 'Director: ')
+                createAndAppendElement('dd', film.director)
+                createAndAppendElement('dt', 'Producer: ')
+                createAndAppendElement('dd', film.producer)
+                createAndAppendElement('dt', 'Release date: ')
+                createAndAppendElement('dd', film.release_date)
+                createAndAppendElement('dt', 'Persons: ', 'persons')
+                createAndAppendElement('dt', 'Starships:', 'starships')
 
-        axios.get('https://swapi.dev/api/films')
-            .then(response => {
-                const data = response.data
-                const title = option.value
+                createAndAppendMultipleElements('dd', film.characters, '[starships]')
+                createAndAppendMultipleElements('dd', film.starships)
 
-                for (i in data.results) {
-                    if (data.results[i].title === title) {
-                        dl.innerHTML = ""
-                        console.log(option.value)
-
-                        const dtTitle = document.createElement('dt')
-                        const dtDirector = document.createElement('dt')
-                        const dtProducer = document.createElement('dt')
-                        const dtReleaseDate = document.createElement('dt')
-                        const dtPersons = document.createElement('dt')
-                        const dtStarships = document.createElement('dt')
-
-                        const ddTitle = document.createElement('dd')
-                        const ddDirector = document.createElement('dd')
-                        const ddProducer = document.createElement('dd')
-                        const ddReleaseDate = document.createElement('dd')
-                        const ddPersons = document.createElement('dd')
-                        const ddStarships = document.createElement('dd')
-
-                        dtTitle.innerText = 'Title: '
-                        ddTitle.innerText = (data.results[i].title)
-
-                        dl.appendChild(dtTitle)
-                        dl.appendChild(ddTitle)
-
-                        dtDirector.innerText = 'Director: '
-                        ddDirector.innerText = (data.results[i].director)
-
-                        dl.appendChild(dtDirector)
-                        dl.appendChild(ddDirector)
-
-                        dtProducer.innerText = 'Producer: '
-                        ddProducer.innerText = (data.results[i].producer)
-
-                        dl.appendChild(dtProducer)
-                        dl.appendChild(ddProducer)
-
-                        dtReleaseDate.innerText = 'Release date: '
-                        ddReleaseDate.innerText = (data.results[i].release_date)
-
-                        dl.appendChild(dtReleaseDate)
-                        dl.appendChild(ddReleaseDate)
-
-                        dtPersons.innerText = 'Persons: '
-                        dl.appendChild(dtPersons)
-
-                        const listPersons = document.createElement('ul')
-
-                        data.results[i].characters.forEach((element) => {
-                            axios.get(element)
-                                .then(response => {
-                                    const data = response.data
-                                    const name = document.createElement('li')
-
-                                    name.innerHTML = data.name
-                                    listPersons.appendChild(name)
-
-                                    ddPersons.appendChild(listPersons)
-
-                                    dl.insertBefore(ddPersons, dtStarships)
-
-                                    console.log(data.name)
-                                })
-                        });
-
-                        //Verificar 
-                        dtStarships.innerText = 'Starships: '
-                        dl.appendChild(dtStarships)
-
-                        const listStarships = document.createElement('ul')
-
-                        data.results[i].starships.forEach((element) => {
-                            axios.get(element)
-                                .then(response => {
-                                    const data = response.data
-                                    const starship = document.createElement('li')
-
-                                    starship.innerHTML = data.name
-                                    listStarships.appendChild(starship)
-
-                                    ddStarships.appendChild(listStarships)
-
-                                    dl.appendChild(ddStarships)
-
-                                    console.log(data.starships)
-                                })
-                        });
-
-                        section_dl.appendChild(dl)
-
-                    }
-                }
-            })
+                section_dl.appendChild(dl)
+            }
+        }
     })
 }
+
+function createAndAppendElement(tagName, content, attribute) {
+    const tag = document.createElement(tagName);
+
+    tag.innerText = content
+
+    if (attribute) tag.setAttribute(attribute, "")
+
+    dl.appendChild(tag);
+};
+
+function createAndAppendMultipleElements(tagName, content, attribute = undefined) {
+    for (let i in content) {
+        axios.get(content[i])
+            .then(response => {
+                const data = response.data
+                const newTag = document.createElement(tagName)
+                newTag.innerText = data.name
+
+                if (attribute === undefined) {
+                    dl.appendChild(newTag)
+                } else if (attribute) {
+                    document.querySelector(attribute).insertAdjacentElement('beforebegin', newTag)
+                }
+            })
+    }
+};
+
 getOptions()
-description()
+getDescription()
