@@ -91,7 +91,7 @@ header div nav>a {
 }
 
 nav a:hover {
-    transition: 2s;
+    transition: 0.2s;
     color: rgb(252, 252, 252);
 }
 
