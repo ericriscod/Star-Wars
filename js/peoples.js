@@ -10,6 +10,7 @@ async function fetchPeople(url) {
         const data = response.data
 
         arrayOptions.push(...data.results.map((person) => person.name))
+        peoplesObj.push(...data.results)
 
         if (data['next']) {
             await fetchPeople(data.next)
@@ -23,19 +24,12 @@ async function fetchPeople(url) {
                 elementOption.value = option
                 select.appendChild(elementOption)
             }
-            convertOfObject(data.results, peoplesObj)
 
             console.log(arrayOptions)
             console.log(peoplesObj)
         }
     } catch (error) {
         console.error(`Erro ao obter opções: ${error}`)
-    }
-}
-
-function convertOfObject(array, newArray) {
-    for (const item of array) {
-        newArray.push(JSON.parse(JSON.stringify(item)))
     }
 }
 
@@ -78,7 +72,6 @@ async function fetchDetaisOfPersons(url) {
 
                 section_dl.appendChild(dl)
             }
-
         })
     }
     catch (error) {
@@ -93,7 +86,7 @@ function createAndAppendElement(tagName, content, attribute) {
     if (attribute) tag.setAttribute(attribute, "")
 
     dl.appendChild(tag);
-};
+}
 
 async function createAndAppendUniqueRequestElement(tagName, content, attribute = undefined) {
     try {
