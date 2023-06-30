@@ -2,49 +2,28 @@ const select = document.querySelector('[options-title]')
 const section_dl = document.querySelector('.section_dl')
 const dl = document.createElement('dl')
 const peoplesObj = []
-const arrayTemp = []
 const arrayOptions = []
 
-async function getOptions(url) {
+async function fetchPeople(url) {
     try {
         const response = await axios.get(url)
         const data = response.data
 
-        const parseForObj = (array, newArray) => {
-            for (let i = 0; i < array.length; i++) {
-                newArray.push(JSON.parse(array[i]))
-            }
-        }
-
-        for (let people of data.results) {
-
-            arrayOptions.push(people.name)
-            arrayTemp.push(JSON.stringify(people))
-        }
+        arrayOptions.push(...data.results.map((person) => person.name))
 
         if (data['next']) {
-            await getOptions(data.next)
-        } 
+            await fetchPeople(data.next)
+        }
         else {
-            arrayOptions.sort((a, b) => {
-                if (a > b) {
-                    return 1
-                } 
-                else if (a < b) {
-                    return -1
-                } 
-                else {
-                    return 0
-                }
-            })
-            
-            for (let i = 0; i < arrayOptions.length; i++) {
-                const option = document.createElement('option')
-                option.innerText = arrayOptions[i]
-                option.value = arrayOptions[i]
-                select.appendChild(option)
+            arrayOptions.sort()
+
+            for (const option of arrayOptions) {
+                const elementOption = document.createElement('option')
+                elementOption.innerText = option
+                elementOption.value = option
+                select.appendChild(elementOption)
             }
-            parseForObj(arrayTemp, peoplesObj)
+            convertOfObject(data.results, peoplesObj)
 
             console.log(arrayOptions)
             console.log(peoplesObj)
@@ -54,45 +33,52 @@ async function getOptions(url) {
     }
 }
 
-async function getDescriptions(url) {
+function convertOfObject(array, newArray) {
+    for (const item of array) {
+        newArray.push(JSON.parse(JSON.stringify(item)))
+    }
+}
 
+async function fetchDetaisOfPersons(url) {
     try {
         const response = await axios.get(url)
+        const data = response.data
 
         select.addEventListener('change', () => {
             dl.textContent = ""
+
             const name = select.value
-            const people = response.data
+            const people = peoplesObj.find((p) => p.name === name)
 
-            for (let i = 0; i < peoplesObj.length; i++) {
-                if (peoplesObj[i].name === name) {
-                    createAndAppendElement('dt', 'Name: ')
-                    createAndAppendElement('dd', peoplesObj[i].name)
-                    createAndAppendElement('dt', 'Height: ')
-                    createAndAppendElement('dd', peoplesObj[i].height)
-                    createAndAppendElement('dt', 'Mass: ')
-                    createAndAppendElement('dd', peoplesObj[i].mass)
-                    createAndAppendElement('dt', 'Hair color: ')
-                    createAndAppendElement('dd', peoplesObj[i].hair_color)
-                    createAndAppendElement('dt', 'Skin color: ')
-                    createAndAppendElement('dd', peoplesObj[i].skin_color)
-                    createAndAppendElement('dt', 'Eye color: ')
-                    createAndAppendElement('dd', peoplesObj[i].eye_color)
-                    createAndAppendElement('dt', 'Birth year: ')
-                    createAndAppendElement('dd', peoplesObj[i].birth_year)
-                    createAndAppendElement('dt', 'Gender: ')
-                    createAndAppendElement('dd', peoplesObj[i].gender)
-                    createAndAppendElement('dt', 'Homeworld: ', 'homeworld')
-                    createAndAppendElement('dt', 'Species: ', 'species')
-                    createAndAppendElement('dt', 'Films: ', 'films')
+            if (people) {
+                createAndAppendElement('dt', 'Name: ')
+                createAndAppendElement('dd', people.name)
+                createAndAppendElement('dt', 'Height: ')
+                createAndAppendElement('dd', people.height)
+                createAndAppendElement('dt', 'Mass: ')
+                createAndAppendElement('dd', people.mass)
+                createAndAppendElement('dt', 'Hair color: ')
+                createAndAppendElement('dd', people.hair_color)
+                createAndAppendElement('dt', 'Skin color: ')
+                createAndAppendElement('dd', people.skin_color)
+                createAndAppendElement('dt', 'Eye color: ')
+                createAndAppendElement('dd', people.eye_color)
+                createAndAppendElement('dt', 'Birth year: ')
+                createAndAppendElement('dd', people.birth_year)
+                createAndAppendElement('dt', 'Gender: ')
+                createAndAppendElement('dd', people.gender)
 
-                    createAndAppendUniqueRequestElement('dd', peoplesObj[i].homeworld, '[species]')
-                    createAndAppendUniqueRequestElement('dd', peoplesObj[i].species, '[films]')
-                    createAndAppendMultipleElements('dd', peoplesObj[i].films)
+                createAndAppendElement('dt', 'Homeworld: ', 'homeworld')
+                createAndAppendElement('dt', 'Species: ', 'species')
+                createAndAppendElement('dt', 'Films: ', 'films')
 
-                    section_dl.appendChild(dl)
-                }
+                createAndAppendUniqueRequestElement('dd', people.homeworld, '[species]')
+                createAndAppendUniqueRequestElement('dd', people.species, '[films]')
+                createAndAppendMultipleElements('dd', people.films)
+
+                section_dl.appendChild(dl)
             }
+
         })
     }
     catch (error) {
@@ -110,7 +96,6 @@ function createAndAppendElement(tagName, content, attribute) {
 };
 
 async function createAndAppendUniqueRequestElement(tagName, content, attribute = undefined) {
-
     try {
         const response = await axios.get(content)
         const data = response.data
@@ -131,7 +116,7 @@ async function createAndAppendUniqueRequestElement(tagName, content, attribute =
 
 async function createAndAppendMultipleElements(tagName, content, attribute = undefined) {
     try {
-        for (let i in content) {
+        for (const i in content) {
             const response = await axios.get(content[i])
             const data = response.data
             const newTag = document.createElement(tagName)
@@ -150,5 +135,5 @@ async function createAndAppendMultipleElements(tagName, content, attribute = und
     }
 }
 
-getOptions('https://swapi.dev/api/people')
-getDescriptions('https://swapi.dev/api/people')
+fetchPeople('https://swapi.dev/api/people')
+fetchDetaisOfPersons('https://swapi.dev/api/people')
