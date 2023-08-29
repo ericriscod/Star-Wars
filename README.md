@@ -13,7 +13,7 @@ Este é um projeto que consome a API do Star Wars e cria um site interativo para
 - GitHub
 - Visual Studio Code
   
-🔗 [Veja o projeto em ação](ericriscod.github.io/Star-Wars/)
+🔗 [Veja o projeto em ação](https://ericriscod.github.io/Star-Wars/)
 
 ## Link: API Star Wars
 
