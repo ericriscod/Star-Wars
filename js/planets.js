@@ -2,7 +2,7 @@
 const select = document.querySelector('[options-title]')
 const section_dl = document.querySelector('.section_dl')
 const dl = document.createElement('dl')
-const arrayObj = []
+const planetsObj = []
 const arrayOptions = []
 
 
@@ -12,8 +12,8 @@ async function fetch(url) {
         const response = await axios.get(url)
         const data = response.data
 
-        arrayOptions.push(...data.results.map((obj) => obj.title))
-        arrayObj.push(...data.results)
+        arrayOptions.push(...data.results.map((person) => person.name))
+        planetsObj.push(...data.results)
 
         if (data['next']) {
             await fetch(data.next)
@@ -29,7 +29,7 @@ async function fetch(url) {
             }
 
             console.log(arrayOptions)
-            console.log(arrayObj)
+            console.log(planetsObj)
         }
     } catch (error) {
         console.error(`Erro ao obter opções: ${error}`)
@@ -44,23 +44,22 @@ async function fetchDetails(url) {
             section_dl.textContent = ""
             dl.textContent = ""
 
-            const title = select.value
-            const obj = arrayObj.find((p) => p.title === title)
+            const name = select.value
+            const planet = planetsObj.find((p) => p.name === name)
 
-            if (obj) {
+            if (planet) {
+                createAndAppendElement('dt', 'Gravity: ')
+                createAndAppendElement('dd', planet.gravity)
+                createAndAppendElement('dt', 'Name: ')
+                createAndAppendElement('dd', planet.name)
+                createAndAppendElement('dt', 'Orbital_period: ')
+                createAndAppendElement('dd', planet.orbital_period)
+                createAndAppendElement('dt', 'Population: ')
+                createAndAppendElement('dd', planet.population)
 
-                createAndAppendElement('dt', 'Title: ')
-                createAndAppendElement('dd', obj.title)
-                createAndAppendElement('dt', 'Director: ')
-                createAndAppendElement('dd', obj.director)
-                createAndAppendElement('dt', 'Producer: ')
-                createAndAppendElement('dd', obj.producer)
-                createAndAppendElement('dt', 'Release_date: ')
-                createAndAppendElement('dd', obj.release_date)
+                createAndAppendElement('dt', 'Residents: ', 'residents')
 
-                createAndAppendElement('dt', 'Characters: ', 'characters')
-
-                createAndAppendMultipleElements('dd', obj.characters)
+                createAndAppendMultipleElements('dd', planet.residents)
 
                 section_dl.appendChild(dl)
             }
@@ -131,5 +130,5 @@ function gifLoading(source) {
 }
 
 gifLoading('../assets/gifs/imperial_emblem.gif')
-fetch('https://swapi.dev/api/films/')
-fetchDetails('https://swapi.dev/api/films/')
+fetch('https://swapi.dev/api/planets/')
+fetchDetails('https://swapi.dev/api/planets/')

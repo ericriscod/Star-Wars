@@ -1,10 +1,12 @@
 const select = document.querySelector('[options-title]')
 const section_dl = document.querySelector('.section_dl')
 const dl = document.createElement('dl')
-const peoplesObj = []
+const arrayObj = []
 const arrayOptions = []
 
-async function fetchPeople(url) {
+
+
+async function fetch(url) {
     try {
         const response = await axios.get(url)
         const data = response.data
@@ -13,7 +15,7 @@ async function fetchPeople(url) {
         peoplesObj.push(...data.results)
 
         if (data['next']) {
-            await fetchPeople(data.next)
+            await fetch(data.next)
         }
         else {
             arrayOptions.sort()
@@ -30,45 +32,40 @@ async function fetchPeople(url) {
         }
     } catch (error) {
         console.error(`Erro ao obter opções: ${error}`)
+    }finally{
+        document.querySelector('.loading').style.display = 'none'
     }
 }
 
-async function fetchDetaisOfPersons(url) {
+async function fetchDetails(url) {
     try {
-        const response = await axios.get(url)
-        const data = response.data
-
         select.addEventListener('change', () => {
+            section_dl.textContent = ""
             dl.textContent = ""
 
             const name = select.value
-            const people = peoplesObj.find((p) => p.name === name)
+            const obj = arrayObj.find((p) => p.name === name)
 
-            if (people) {
+            if (obj) {
                 createAndAppendElement('dt', 'Name: ')
-                createAndAppendElement('dd', people.name)
+                createAndAppendElement('dd', obj.name)
                 createAndAppendElement('dt', 'Height: ')
-                createAndAppendElement('dd', people.height)
+                createAndAppendElement('dd', obj.height)
                 createAndAppendElement('dt', 'Mass: ')
-                createAndAppendElement('dd', people.mass)
+                createAndAppendElement('dd', obj.mass)
                 createAndAppendElement('dt', 'Hair color: ')
-                createAndAppendElement('dd', people.hair_color)
+                createAndAppendElement('dd', obj.hair_color)
                 createAndAppendElement('dt', 'Skin color: ')
-                createAndAppendElement('dd', people.skin_color)
+                createAndAppendElement('dd', obj.skin_color)
                 createAndAppendElement('dt', 'Eye color: ')
-                createAndAppendElement('dd', people.eye_color)
+                createAndAppendElement('dd', obj.eye_color)
                 createAndAppendElement('dt', 'Birth year: ')
-                createAndAppendElement('dd', people.birth_year)
+                createAndAppendElement('dd', obj.birth_year)
                 createAndAppendElement('dt', 'Gender: ')
-                createAndAppendElement('dd', people.gender)
+                createAndAppendElement('dd', obj.gender)
 
-                createAndAppendElement('dt', 'Homeworld: ', 'homeworld')
-                createAndAppendElement('dt', 'Species: ', 'species')
-                createAndAppendElement('dt', 'Films: ', 'films')
-
-                createAndAppendUniqueRequestElement('dd', people.homeworld, '[species]')
-                createAndAppendUniqueRequestElement('dd', people.species, '[films]')
-                createAndAppendMultipleElements('dd', people.films)
+                createAndAppendElement('dt', 'specie: ', 'specie')
+                createAndAppendUniqueRequestElement('dd', obj.specie, '[films]')
 
                 section_dl.appendChild(dl)
             }
@@ -128,5 +125,16 @@ async function createAndAppendMultipleElements(tagName, content, attribute = und
     }
 }
 
-fetchPeople('https://swapi.dev/api/people')
-fetchDetaisOfPersons('https://swapi.dev/api/people')
+function gifLoading(source){
+    const img = document.createElement('img')
+
+    img.src = source
+    img.title = 'Loading'
+    img.classList.add('loading')
+
+    document.querySelector('.choose').appendChild(img)
+}
+
+gifLoading('../assets/gifs/imperial_emblem.gif')
+fetch('https://swapi.dev/api/people/')
+fetchDetails('https://swapi.dev/api/people/')

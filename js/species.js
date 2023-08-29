@@ -12,7 +12,7 @@ async function fetch(url) {
         const response = await axios.get(url)
         const data = response.data
 
-        arrayOptions.push(...data.results.map((obj) => obj.title))
+        arrayOptions.push(...data.results.map((obj) => obj.name))
         arrayObj.push(...data.results)
 
         if (data['next']) {
@@ -40,27 +40,37 @@ async function fetch(url) {
 
 async function fetchDetails(url) {
     try {
+
         select.addEventListener('change', () => {
             section_dl.textContent = ""
             dl.textContent = ""
 
-            const title = select.value
-            const obj = arrayObj.find((p) => p.title === title)
+            const name = select.value
+            const obj = arrayObj.find((p) => p.name === name)
 
             if (obj) {
-
-                createAndAppendElement('dt', 'Title: ')
-                createAndAppendElement('dd', obj.title)
-                createAndAppendElement('dt', 'Director: ')
-                createAndAppendElement('dd', obj.director)
-                createAndAppendElement('dt', 'Producer: ')
-                createAndAppendElement('dd', obj.producer)
-                createAndAppendElement('dt', 'Release_date: ')
-                createAndAppendElement('dd', obj.release_date)
-
-                createAndAppendElement('dt', 'Characters: ', 'characters')
-
-                createAndAppendMultipleElements('dd', obj.characters)
+                createAndAppendElement('dt', 'Name: ')
+                createAndAppendElement('dd', obj.name)
+                createAndAppendElement('dt', 'Classification: ')
+                createAndAppendElement('dd', obj.classification)
+                createAndAppendElement('dt', 'Designation: ')
+                createAndAppendElement('dd', obj.designation)
+                createAndAppendElement('dt', 'Average_height: ')
+                createAndAppendElement('dd', obj.average_height)
+                createAndAppendElement('dt', 'Skin_colors: ')
+                createAndAppendElement('dd', obj.skin_colors)
+                createAndAppendElement('dt', 'Hair_colors: ')
+                createAndAppendElement('dd', obj.hair_colors)
+                createAndAppendElement('dt', 'Eye_colors: ')
+                createAndAppendElement('dd', obj.eye_colors)
+                createAndAppendElement('dt', 'Average_lifespan: ')
+                createAndAppendElement('dd', obj.average_lifespan)
+                createAndAppendElement('dt', 'Homeworld: ')
+                createAndAppendUniqueRequestElement('dd', obj.homeworld, '[language]')
+                createAndAppendElement('dt', 'Language: ', 'language')
+                createAndAppendElement('dd', obj.language)
+                createAndAppendElement('dt', 'Peoples: ')
+                createAndAppendMultipleElements('dd', obj.people)
 
                 section_dl.appendChild(dl)
             }
@@ -131,5 +141,6 @@ function gifLoading(source) {
 }
 
 gifLoading('../assets/gifs/imperial_emblem.gif')
-fetch('https://swapi.dev/api/films/')
-fetchDetails('https://swapi.dev/api/films/')
+
+fetch('https://swapi.dev/api/species/')
+fetchDetails('https://swapi.dev/api/species/')

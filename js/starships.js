@@ -12,7 +12,7 @@ async function fetch(url) {
         const response = await axios.get(url)
         const data = response.data
 
-        arrayOptions.push(...data.results.map((obj) => obj.title))
+        arrayOptions.push(...data.results.map((obj) => obj.name))
         arrayObj.push(...data.results)
 
         if (data['next']) {
@@ -44,23 +44,40 @@ async function fetchDetails(url) {
             section_dl.textContent = ""
             dl.textContent = ""
 
-            const title = select.value
-            const obj = arrayObj.find((p) => p.title === title)
+            const name = select.value
+            const obj = arrayObj.find((p) => p.name === name)
 
             if (obj) {
 
-                createAndAppendElement('dt', 'Title: ')
-                createAndAppendElement('dd', obj.title)
-                createAndAppendElement('dt', 'Director: ')
-                createAndAppendElement('dd', obj.director)
-                createAndAppendElement('dt', 'Producer: ')
-                createAndAppendElement('dd', obj.producer)
-                createAndAppendElement('dt', 'Release_date: ')
-                createAndAppendElement('dd', obj.release_date)
+                createAndAppendElement('dt', 'Name: ')
+                createAndAppendElement('dd', obj.name)
+                createAndAppendElement('dt', 'Model: ')
+                createAndAppendElement('dd', obj.model)
+                createAndAppendElement('dt', 'Manufacturer: ')
+                createAndAppendElement('dd', obj.manufacturer)
+                createAndAppendElement('dt', 'Cost_in_credits: ')
+                createAndAppendElement('dd', obj.cost_in_credits)
+                createAndAppendElement('dt', 'Length: ')
+                createAndAppendElement('dd', obj.length)
+                createAndAppendElement('dt', 'Max_atmosphering_speed: ')
+                createAndAppendElement('dd', obj.max_atmosphering_speed)
+                createAndAppendElement('dt', 'Crew: ')
+                createAndAppendElement('dd', obj.crew)
+                createAndAppendElement('dt', 'Passengers: ')
+                createAndAppendElement('dd', obj.passengers)
+                createAndAppendElement('dt', 'Cargo_capacity: ')
+                createAndAppendElement('dd', obj.cargo_capacity)
+                createAndAppendElement('dt', 'Consumables: ')
+                createAndAppendElement('dd', obj.consumables)
+                createAndAppendElement('dt', 'Hyperdrive_rating: ')
+                createAndAppendElement('dd', obj.hyperdrive_rating)
+                createAndAppendElement('dt', 'MGLT: ')
+                createAndAppendElement('dd', obj.MGLT)
+                createAndAppendElement('dt', 'starship_class: ')
+                createAndAppendElement('dd', obj.starship_class)
+                createAndAppendElement('dt', 'pilots: ')
 
-                createAndAppendElement('dt', 'Characters: ', 'characters')
-
-                createAndAppendMultipleElements('dd', obj.characters)
+                createAndAppendUniqueRequestElement('dd', obj.pilots)
 
                 section_dl.appendChild(dl)
             }
@@ -131,5 +148,5 @@ function gifLoading(source) {
 }
 
 gifLoading('../assets/gifs/imperial_emblem.gif')
-fetch('https://swapi.dev/api/films/')
-fetchDetails('https://swapi.dev/api/films/')
+fetch('https://swapi.dev/api/starships/')
+fetchDetails('https://swapi.dev/api/starships/')
